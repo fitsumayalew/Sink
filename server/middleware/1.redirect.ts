@@ -36,7 +36,16 @@ export default eventHandler(async (event) => {
       catch (error) {
         console.error('Failed write access log:', error)
       }
-      const target = redirectWithQuery ? withQuery(link.url, getQuery(event)) : link.url
+      const query = getQuery(event)
+
+      // Only forward userID query param
+      const filteredQuery: Record<string, any> = {}
+      if (query.userID !== undefined) {
+        const targetKey = link.userIdMapTo || 'userID'
+        filteredQuery[targetKey] = query.userID
+      }
+
+      const target = redirectWithQuery ? withQuery(link.url, filteredQuery) : link.url
       return sendRedirect(event, target, +useRuntimeConfig(event).redirectStatusCode)
     }
   }

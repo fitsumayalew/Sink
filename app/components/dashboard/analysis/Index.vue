@@ -76,6 +76,7 @@ onBeforeMount(() => {
     </div>
     <DashboardAnalysisCounters />
     <DashboardAnalysisViews />
+    <DashboardAnalysisUserIds :link="link" />
     <DashboardAnalysisMetrics />
   </main>
 </template>

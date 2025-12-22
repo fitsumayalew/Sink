@@ -35,6 +35,7 @@ export const blobsMap = {
   blob14: 'device',
   blob15: 'deviceType',
   blob16: 'COLO',
+  blob17: 'userID',
 } as const
 
 export const doublesMap = {
@@ -125,6 +126,8 @@ export function useAccessLog(event: H3Event) {
 
   const regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
   const countryName = regionNames.of(cf?.country || 'WD') // fallback to "Worldwide"
+  const { userID } = getQuery(event)
+
   const accessLogs = {
     url: link.url,
     slug: link.slug,
@@ -142,6 +145,7 @@ export function useAccessLog(event: H3Event) {
     device: uaInfo?.device?.model,
     deviceType: uaInfo?.device?.type,
     COLO: cf?.colo,
+    userID: userID?.toString() || undefined,
 
     // For RealTime Globe
     latitude: Number(cf?.latitude || getHeader(event, 'cf-iplatitude') || 0),

@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     siteToken: crypto.randomUUID(),
     redirectStatusCode: '301',
     linkCacheTtl: 60,
-    redirectWithQuery: false,
+    redirectWithQuery: true,
     homeURL: '',
     cfAccountId: '',
     cfApiToken: '',
@@ -37,6 +37,7 @@ export default defineNuxtConfig({
       previewMode: '',
       slugDefaultLength: '6',
     },
+    analyticsAllowlist: ['userID'],
   },
 
   routeRules: {

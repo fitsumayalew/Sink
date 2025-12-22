@@ -37,6 +37,7 @@ const EditLinkSchema = LinkSchema.pick({
     image: true,
   }).extend({
     expiration: z.coerce.date().optional(),
+    userIdMapTo: LinkSchema.shape.userIdMapTo,
   }).optional(),
 })
 
@@ -47,6 +48,10 @@ const fieldConfig = {
   optional: {
     comment: {
       component: 'textarea',
+    },
+    userIdMapTo: {
+      label: 'Map userID to',
+      description: 'Rename userID param on destination (e.g., "external_id")',
     },
   },
 }
@@ -67,6 +72,7 @@ const form = useForm({
     url: link.value.url,
     optional: {
       comment: link.value.comment,
+      userIdMapTo: link.value.userIdMapTo || '',
     },
   },
   validateOnMount: isEdit,
