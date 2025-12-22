@@ -21,7 +21,8 @@ function query2sql(query: typeof QuerySchema._type, event: H3Event): string {
 export default eventHandler(async (event) => {
   const query = await getValidatedQuery(event, QuerySchema.parse)
   const sql = query2sql(query, event)
-  const result = await useWAE(event, sql) as { userID: string, count: number }[]
+  const response = await useWAE(event, sql) as { data: { userID: string, count: number }[] }
+  const result = response?.data || []
 
   // Filter out empty userIDs
   const filtered = result.filter(row => row.userID && row.userID !== '')
